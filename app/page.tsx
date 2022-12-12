@@ -1,6 +1,22 @@
 import React from 'react'
 import Image from 'next/image'
 
+function Stat({ record, standings }: { record: string; standings: string }) {
+    return (
+        <div className="mx-4">
+            <h2 className="font-semibold text-xl">Summary</h2>
+            <div className="flex justify-between">
+                <p>Record</p>
+                <p>{record}</p>
+            </div>
+            <div className="flex justify-between">
+                <p>Conference Ranking</p>
+                <p>{standings}</p>
+            </div>
+        </div>
+    )
+}
+
 function Row({
     image,
     name,
@@ -58,6 +74,9 @@ export default async function HomePage() {
     )
     const data = await res.json()
 
+    const record = data.team.recordSummary
+    const standings = data.team.standingSummary
+
     const events = data.events.map(
         (event: { competitions: { competitors: any[] }[] }) => {
             const competitors = event.competitions[0].competitors.map(
@@ -100,7 +119,7 @@ export default async function HomePage() {
                 score="88-100"
                 win
             /> */}
-
+            <Stat record={record} standings={standings} />
             <h2 className="font-semibold text-xl ml-4">Schedule</h2>
             <h3 className="font-semibold text-gray-700 mb-2 ml-4">Full</h3>
 
