@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import { RProps, SProps, CProps } from '../utils/types'
 
-function Stat({ record, standings }: { record: string; standings: string }) {
+function Stat({ record, standings }: SProps) {
     return (
         <div className="mx-4">
             <h2 className="font-semibold text-xl">Summary</h2>
@@ -17,19 +18,7 @@ function Stat({ record, standings }: { record: string; standings: string }) {
     )
 }
 
-function Row({
-    image,
-    name,
-    score,
-    win,
-    date,
-}: {
-    image: string
-    name: string
-    score: string
-    win: boolean
-    date: string
-}) {
+function Row({ image, name, score, win, date }: RProps) {
     const formattedDate = new Date(date).toLocaleString('en-US', {
         day: '2-digit',
         month: '2-digit',
@@ -78,7 +67,9 @@ export default async function HomePage() {
     const standings = data.team.standingSummary
 
     const events = data.events.map(
-        (event: { competitions: { competitors: any[] }[] }) => {
+        (event: {
+            competitions: { competitors: CProps[]; date: string }[]
+        }) => {
             const competitors = event.competitions[0].competitors.map(
                 (competitor) => {
                     return {
@@ -98,13 +89,14 @@ export default async function HomePage() {
             )
 
             return {
+                id: otherTeam?.id,
                 date: event.competitions[0].date,
-                name: otherTeam.name,
-                logo: otherTeam.logo,
+                name: otherTeam?.name,
+                logo: otherTeam?.logo,
                 score:
-                    otherTeam.score &&
-                    `${otherTeam.score}-${favoriteTeam.score}`,
-                winner: favoriteTeam.winner,
+                    otherTeam?.score &&
+                    `${otherTeam.score}-${favoriteTeam?.score}`,
+                winner: favoriteTeam?.winner,
             }
         }
     )
@@ -125,6 +117,7 @@ export default async function HomePage() {
 
             {events.map(
                 (event: {
+                    id: string
                     logo: string
                     name: string
                     score: string
@@ -133,7 +126,7 @@ export default async function HomePage() {
                 }) => {
                     return (
                         <Row
-                            key={event.name}
+                            key={event.id}
                             image={event.logo}
                             name={event.name}
                             score={event.score}
