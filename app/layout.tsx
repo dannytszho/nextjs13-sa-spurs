@@ -9,7 +9,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <head />
-            <body>{children}</body>
+            <body className="mt-60">{children}</body>
         </html>
     )
 }
