@@ -9,7 +9,11 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <head />
-            <body className="mt-20">{children}</body>
+
+            <body>
+                <div className="top-0 w-full h-8 bg-[#660015]" />
+                {children}
+            </body>
         </html>
     )
 }

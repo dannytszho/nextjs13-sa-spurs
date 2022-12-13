@@ -1,28 +1,17 @@
 import React from 'react'
 import Image from 'next/image'
-import { RProps, SProps, CProps } from '../utils/types'
-
-interface RankProps {
-    TeamID: number
-    Division: string
-    Name: string
-    Wins: string
-    Losses: string
-    StreakDescription: string
-    teamName: { image: string }
-}
-
-interface StandingsProps {
-    name: string
-    wins: string
-    losses: string
-    streaks: string
-    image: string
-}
+import {
+    RProps,
+    SProps,
+    CProps,
+    RankProps,
+    StandingsProps,
+} from '../utils/types'
+import { FaChevronDown } from 'react-icons/fa'
 
 function Stat({ record, standings }: SProps) {
     return (
-        <div className="mx-4">
+        <div className="mx-4 mt-8">
             <h2 className="font-semibold text-xl">Summary</h2>
             <div className="flex justify-between">
                 <p>Record</p>
@@ -179,10 +168,49 @@ export default async function HomePage() {
         }
     )
 
+    const nextGame =
+        events[
+            events.findIndex(
+                (element: { score: string }) =>
+                    typeof element.score === 'undefined'
+            )
+        ]
+
+    const currentTeam: RankProps = teamsInSouthWestWithImage.find(
+        (team: { Name: string }) => team.Name === 'Spurs'
+    )
+
     return (
         <>
+            <div className="flex mx-3 mt-4">
+                <div className="flex w-full h-12 border px-3 border-gray-300 rounded-md justify-between items-center">
+                    <div className="flex items-center">
+                        <Image
+                            src={currentTeam.teamName.image}
+                            alt="NBA teams LOGO"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5"
+                        />
+                        <p className="font-bold ml-4">
+                            {currentTeam.City} {currentTeam.Name}
+                        </p>
+                    </div>
+                    <p className="text-xs text-gray-600">
+                        <FaChevronDown />
+                    </p>
+                </div>
+            </div>
             <Stat record={record} standings={standings} />
-            <div className="flex justify-between">
+            <h2 className="font-semibold text-xl ml-4 mt-16">Next Game</h2>
+            <RowSchedule
+                key={nextGame.id}
+                image={nextGame.logo}
+                name={nextGame.name}
+                date={nextGame.date}
+            />
+
+            <div className="flex justify-between mt-8">
                 <h2 className="font-semibold text-xl ml-4">
                     {teamsInSouthWest[0].Division} Standings
                 </h2>
@@ -204,7 +232,7 @@ export default async function HomePage() {
                     />
                 )
             })}
-            <h2 className="font-semibold text-xl ml-4">Schedule</h2>
+            <h2 className="font-semibold text-xl ml-4 mt-8">Schedule</h2>
             <h3 className="font-semibold text-gray-700 mb-2 ml-4">Full</h3>
 
             {events.map(
