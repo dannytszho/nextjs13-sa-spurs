@@ -1,15 +1,16 @@
 import React from 'react'
 import Image from 'next/image'
-import { SProps, CProps, RankProps } from '../utils/types'
+import { CProps, RankProps } from '../utils/types'
 import { FaChevronDown } from 'react-icons/fa'
 import { nbaStandingsData } from '../utils/index'
 import RowSchedule from '../components/RowSchedule'
 import RowStandings from '../components/RowStandings'
 import Stat from '../components/Stat'
+import TeamPicker from '../components/TeamPicker'
 
 export default async function HomePage() {
     const res = await fetch(
-        'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/5/schedule'
+        'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cleveland/schedule'
     )
     const data = await res.json()
 
@@ -61,7 +62,6 @@ export default async function HomePage() {
     )
     // const standingsData = await standingsRes.json()
     const standingsData = nbaStandingsData
-    console.log('standingsData', standingsData)
 
     const teamsInSouthWest = standingsData.filter(
         (team: RankProps) => team.Division === 'Southwest'
@@ -97,15 +97,77 @@ export default async function HomePage() {
                     typeof element.score === 'undefined'
             )
         ]
-    console.log('nextGame', nextGame)
 
     const currentTeam: RankProps = teamsInSouthWestWithImage.find(
         (team: { Name: string }) => team.Name === 'Spurs'
     )
 
+    const teams = [
+        {
+            id: 1,
+            City: 'Los Angeles',
+            Name: 'Lakers',
+            // teamName: { image: '/images/lakers-logo.png' },
+        },
+        {
+            id: 2,
+            City: 'Chicago',
+            Name: 'Bulls',
+            // teamName: { image: '/images/bulls-logo.png' },
+        },
+        {
+            id: 3,
+            City: 'Miami',
+            Name: 'Heat',
+            // teamName: { image: '/images/heat-logo.png' },
+        },
+        {
+            id: 4,
+            City: 'Boston',
+            Name: 'Celtics',
+            teamName: { image: '/images/celtics-logo.png' },
+        },
+        {
+            id: 5,
+            City: 'Golden State',
+            Name: 'Warriors',
+            // teamName: { image: '/images/warriors-logo.png' },
+        },
+        {
+            id: 6,
+            City: 'Brooklyn',
+            Name: 'Nets',
+            teamName: { image: '/images/nets-logo.png' },
+        },
+        {
+            id: 7,
+            City: 'Houston',
+            Name: 'Rockets',
+            // teamName: { image: '/images/rockets-logo.png' },
+        },
+        {
+            id: 8,
+            City: 'Milwaukee',
+            Name: 'Bucks',
+            // teamName: { image: '/images/bucks-logo.png' },
+        },
+        {
+            id: 9,
+            City: 'Philadelphia',
+            Name: '76ers',
+            // teamName: { image: '/images/76ers-logo.png' },
+        },
+        {
+            id: 10,
+            City: 'Toronto',
+            Name: 'Raptors',
+            // teamName: { image: '/images/raptors-logo.png' },
+        },
+    ]
+
     return (
         <>
-            <div className="flex mx-3 mt-4">
+            {/* <div className="flex mx-3 mt-4">
                 <div className="flex w-full h-12 border px-3 border-gray-300 rounded-md justify-between items-center">
                     <div className="flex items-center">
                         <Image
@@ -123,7 +185,8 @@ export default async function HomePage() {
                         <FaChevronDown />
                     </p>
                 </div>
-            </div>
+            </div> */}
+            <TeamPicker teams={teams} />
             <Stat record={record} standings={standings} />
             <h2 className="font-semibold text-xl ml-4 mt-16">Next Game</h2>
             <RowSchedule
