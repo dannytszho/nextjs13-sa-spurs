@@ -1,95 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
-import {
-    RProps,
-    SProps,
-    CProps,
-    RankProps,
-    StandingsProps,
-} from '../utils/types'
+import { SProps, CProps, RankProps } from '../utils/types'
 import { FaChevronDown } from 'react-icons/fa'
-
-function Stat({ record, standings }: SProps) {
-    return (
-        <div className="mx-4 mt-8">
-            <h2 className="font-semibold text-xl">Summary</h2>
-            <div className="flex justify-between">
-                <p>Record</p>
-                <p>{record}</p>
-            </div>
-            <div className="flex justify-between">
-                <p>Conference Ranking</p>
-                <p>{standings}</p>
-            </div>
-        </div>
-    )
-}
-
-function RowStandings({ name, wins, losses, streaks, image }: StandingsProps) {
-    return (
-        <div className="flex border-b border-gray-200 justify-between px-8 py-2">
-            <div className="flex">
-                <Image
-                    src={image}
-                    alt="NBA teams LOGO"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                />
-                <p className="font-bold ml-4">{name}</p>
-            </div>
-
-            <div className="flex text-center gap-x-5">
-                <p className="text-gray-700">{wins}</p>
-                <p className="text-gray-700">{losses}</p>
-                <p className="text-gray-700 font-semibold">{streaks}</p>
-            </div>
-        </div>
-    )
-}
-
-function RowSchedule({ image, name, score, win, date }: RProps) {
-    const formattedDate = new Date(date).toLocaleString('en-US', {
-        day: '2-digit',
-        month: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-    })
-    return (
-        <div className="flex border-b border-gray-200 justify-between px-8 py-2">
-            <div className="flex">
-                <Image
-                    src={image}
-                    alt="NBA teams LOGO"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                />
-                <p className="font-bold ml-4">{name}</p>
-            </div>
-            <div className="flex text-center">
-                <p className="text-gray-700">{score}</p>
-                {score ? (
-                    win ? (
-                        <p className="text-white ml-2 bg-green-500 w-6 h-6 rounded-full">
-                            W
-                        </p>
-                    ) : (
-                        <p className="text-white ml-2 bg-red-500 w-6 h-6 rounded-full">
-                            L
-                        </p>
-                    )
-                ) : (
-                    <p className="text-gray-700">{formattedDate}</p>
-                )}
-            </div>
-        </div>
-    )
-}
+import { nbaStandingsData } from '../utils/index'
+import RowSchedule from '../components/RowSchedule'
+import RowStandings from '../components/RowStandings'
+import Stat from '../components/Stat'
 
 export default async function HomePage() {
     const res = await fetch(
-        'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/24/schedule'
+        'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/5/schedule'
     )
     const data = await res.json()
 
@@ -139,7 +59,9 @@ export default async function HomePage() {
             },
         }
     )
-    const standingsData = await standingsRes.json()
+    // const standingsData = await standingsRes.json()
+    const standingsData = nbaStandingsData
+    console.log('standingsData', standingsData)
 
     const teamsInSouthWest = standingsData.filter(
         (team: RankProps) => team.Division === 'Southwest'
@@ -175,6 +97,7 @@ export default async function HomePage() {
                     typeof element.score === 'undefined'
             )
         ]
+    console.log('nextGame', nextGame)
 
     const currentTeam: RankProps = teamsInSouthWestWithImage.find(
         (team: { Name: string }) => team.Name === 'Spurs'
