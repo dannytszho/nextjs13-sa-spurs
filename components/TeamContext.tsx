@@ -22,7 +22,6 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
     const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
     const [teamDetails, setTeamDetails] = useState<any>(null)
-    console.log(teamDetails)
 
     useEffect(() => {
         if (selectedTeam) {

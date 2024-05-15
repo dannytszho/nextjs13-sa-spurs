@@ -118,7 +118,7 @@ export default function HomePage() {
             <div>
                 <TeamPicker />
                 <Stat />
-                {/* <RowSchedule /> */}
+                <RowSchedule />
             </div>
         </TeamProvider>
         // <>
