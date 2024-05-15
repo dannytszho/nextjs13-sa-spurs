@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { FaChevronDown } from 'react-icons/fa' // Import the icon from react-icons
+import { useTeamContext } from '../utils/hooks/useTeamContext'
 
 type Team = {
     id: string
@@ -12,7 +13,7 @@ type Team = {
 }
 
 const TeamPicker = () => {
-    const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
+    const { selectedTeam, setSelectedTeam } = useTeamContext()
     const [teams, setTeams] = useState<Team[]>([])
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
