@@ -2,12 +2,21 @@ import React from 'react'
 import Image from 'next/image'
 import { useTeamContext } from '../utils/hooks/useTeamContext'
 import { CProps } from '../utils/types'
+import {
+    fetchAllTeamsData,
+    structureDataByDivision,
+} from '../utils/fetchAllStandings'
 
-const RowSchedule = () => {
+const RowSchedule: any = () => {
     const { selectedTeam, teamDetails } = useTeamContext()
 
-    const record = teamDetails?.team?.recordSummary
-    const standings = teamDetails?.team?.standingSummary
+    // fetchAllTeamsData()
+    //     .then((allTeamsData) => {
+    //         console.log(allTeamsData)
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error fetching team data:', error)
+    //     })
 
     const events = teamDetails?.events.map(
         (event: {

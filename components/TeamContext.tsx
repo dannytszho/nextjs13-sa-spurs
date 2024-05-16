@@ -1,4 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import {
+    fetchAllTeamsData,
+    structureDataByDivision,
+} from '../utils/fetchAllStandings'
 
 type Team = {
     id: string
@@ -13,6 +17,8 @@ type TeamContextType = {
     setSelectedTeam: React.Dispatch<React.SetStateAction<Team | null>>
     teamDetails: any
     setTeamDetails: React.Dispatch<React.SetStateAction<any>>
+    structuredTeamsData: any
+    setStructuredTeamsData: React.Dispatch<React.SetStateAction<any>>
 }
 
 export const TeamContext = createContext<TeamContextType | undefined>(undefined)
@@ -22,6 +28,7 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
     const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
     const [teamDetails, setTeamDetails] = useState<any>(null)
+    const [structuredTeamsData, setStructuredTeamsData] = useState<any>(null)
 
     useEffect(() => {
         if (selectedTeam) {
@@ -40,6 +47,18 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
                 }
             }
             fetchTeamDetails()
+            const getStructuredTeamData = async (): Promise<void> => {
+                try {
+                    const allTeamsData = await fetchAllTeamsData()
+                    const structuredData = structureDataByDivision(allTeamsData)
+                    console.log(structuredData)
+                    setStructuredTeamsData(structuredData)
+                } catch (error) {
+                    console.error('Error structuring team data', error)
+                }
+            }
+
+            getStructuredTeamData()
         }
     }, [selectedTeam])
 
@@ -50,6 +69,8 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
                 setSelectedTeam,
                 teamDetails,
                 setTeamDetails,
+                structuredTeamsData,
+                setStructuredTeamsData,
             }}
         >
             {children}
