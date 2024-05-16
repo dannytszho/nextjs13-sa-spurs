@@ -23,14 +23,14 @@ const RowStandings = () => {
                 <h2 className="font-semibold text-xl ml-4">
                     {division} Standings
                 </h2>
-                <div className="flex gap-x-6 px-10">
+                <div className="flex gap-x-6 px-6">
                     <p className="text-gray-700">W</p>
                     <p className="text-gray-700">L</p>
                 </div>
             </div>
             {sortTeamsByWins.map((team: TeamData) => (
                 <div
-                    className="flex border-b border-gray-200 justify-between px-8 py-2"
+                    className="flex border-b border-gray-200 justify-between px-4 md:px-8 py-2"
                     key={team.name}
                 >
                     <div className="flex">

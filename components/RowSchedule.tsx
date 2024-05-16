@@ -14,7 +14,7 @@ const RowSchedule: any = () => {
                 (competitor) => {
                     return {
                         id: competitor.id,
-                        name: competitor.team.shortDisplayName,
+                        name: competitor.team.displayName,
                         logo: competitor.team.logos[0].href,
                         score: competitor.score?.displayValue,
                         winner: competitor.winner,
@@ -69,7 +69,7 @@ const RowSchedule: any = () => {
     return (
         <>
             <h2 className="font-semibold text-xl ml-4 mt-16">Next Game</h2>
-            <div className="flex border-b border-gray-200 justify-between px-8 py-2">
+            <div className="flex border-b border-gray-200 justify-between px-4 md:px-8 py-2">
                 <div className="flex">
                     <Image
                         src={nextGame.logo}

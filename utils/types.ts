@@ -13,7 +13,7 @@ export interface SProps {
 
 export interface CProps {
     id: string
-    team: { shortDisplayName: string; logos: { href: string }[] }
+    team: { displayName: string; logos: { href: string }[] }
     logo: string
     score?: { displayValue: string }
     winner: string
