@@ -31,11 +31,13 @@ const teamAbbreviations = [
     'WAS', // Washington Wizards
 ]
 
-interface TeamData {
+export type TeamData = {
     abbreviation: string
     standingSummary: string
     wins: number
-    loses: number
+    losses: number
+    image: string
+    name: string
 }
 
 export async function fetchTeamData(team: string): Promise<TeamData | null> {
@@ -48,7 +50,9 @@ export async function fetchTeamData(team: string): Promise<TeamData | null> {
             abbreviation: team,
             standingSummary: data.team?.standingSummary,
             wins: Number(data.team?.recordSummary?.split('-')[0]),
-            loses: Number(data.team?.recordSummary?.split('-')[1]),
+            losses: Number(data.team?.recordSummary?.split('-')[1]),
+            image: data.team?.logo,
+            name: data.team?.displayName,
         }
     } catch (error) {
         console.error(`Error fetching data for team: ${team}`, error)
@@ -64,7 +68,7 @@ export async function fetchAllTeamsData(): Promise<TeamData[]> {
     )
 }
 
-interface StructuredData {
+export type StructuredData = {
     [division: string]: TeamData[]
 }
 

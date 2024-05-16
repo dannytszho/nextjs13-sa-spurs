@@ -44,7 +44,7 @@ const TeamPicker = () => {
             )
             setTeams(teamsData)
         } catch (error) {
-            console.log('Error fetching team data:', error)
+            console.error('Error fetching team data:', error)
         }
     }
 

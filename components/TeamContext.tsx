@@ -43,7 +43,7 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
                     const data = await res.json()
                     setTeamDetails(data)
                 } catch (error) {
-                    console.log('Error fetching team details:', error)
+                    console.error('Error fetching team details:', error)
                 }
             }
             fetchTeamDetails()
@@ -51,7 +51,6 @@ export const TeamProvider: React.FC<{ children: React.ReactNode }> = ({
                 try {
                     const allTeamsData = await fetchAllTeamsData()
                     const structuredData = structureDataByDivision(allTeamsData)
-                    console.log(structuredData)
                     setStructuredTeamsData(structuredData)
                 } catch (error) {
                     console.error('Error structuring team data', error)
