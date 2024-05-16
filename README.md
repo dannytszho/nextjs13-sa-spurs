@@ -4,9 +4,11 @@ NBA Team Tracker is a personal portfolio project built using Next.js and Tailwin
 
 ## Demo
 
-Here is a quick look at the NBA Team Tracker in action:
+Here are some screenshots showing the NBA Team Tracker in action:
 
-![Demo of NBA Team Tracker](assets/demo.png)
+![Demo 1 of NBA Team Tracker](public/demo1.png)
+
+![Demo 2 of NBA Team Tracker](public/demo2.png)
 
 ## Features
 
